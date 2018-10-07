@@ -7,23 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F7198A32168BE3C0039B115 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7198A22168BE3C0039B115 /* CoreDataManager.swift */; };
 		FDDD6328214800C700575F80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDD6327214800C700575F80 /* AppDelegate.swift */; };
-		FDDD632A214800C700575F80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDD6329214800C700575F80 /* ViewController.swift */; };
 		FDDD632D214800C700575F80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDDD632B214800C700575F80 /* Main.storyboard */; };
 		FDDD6330214800C700575F80 /* Bois_Payment_Solver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDDD632E214800C700575F80 /* Bois_Payment_Solver.xcdatamodeld */; };
 		FDDD6332214800C900575F80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDDD6331214800C900575F80 /* Assets.xcassets */; };
 		FDDD6335214800C900575F80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDDD6333214800C900575F80 /* LaunchScreen.storyboard */; };
+		FDF74038214947FA00B19617 /* OrdersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF74037214947FA00B19617 /* OrdersTableViewController.swift */; };
+		FDF7403C2149485100B19617 /* SelectBoisTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7403B2149485100B19617 /* SelectBoisTableViewController.swift */; };
+		FDF7403E2149486E00B19617 /* BoisTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7403D2149486E00B19617 /* BoisTableViewController.swift */; };
+		FDF740402149487700B19617 /* CreateNewBoiTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7403F2149487700B19617 /* CreateNewBoiTableViewController.swift */; };
+		FDF74042214948C300B19617 /* BoiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF74041214948C300B19617 /* BoiViewController.swift */; };
+		FDF74044214948EE00B19617 /* OwedMoneyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF74043214948EE00B19617 /* OwedMoneyTableViewController.swift */; };
+		FDF7404621494B2800B19617 /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7404521494B2800B19617 /* OrderCell.swift */; };
+		FDF7404A21494D5700B19617 /* NewShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7404921494D5700B19617 /* NewShopViewController.swift */; };
+		FDF7404C21496D2E00B19617 /* ManageOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7404B21496D2E00B19617 /* ManageOrderViewController.swift */; };
+		FDF74057214ABBF800B19617 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF74056214ABBF800B19617 /* ProductCell.swift */; };
+		FDF74059214AFC7700B19617 /* BoisTRCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF74058214AFC7700B19617 /* BoisTRCell.swift */; };
+		FDF7405B214B00ED00B19617 /* NewProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7405A214B00ED00B19617 /* NewProductViewController.swift */; };
+		FDF7405D214B5D2400B19617 /* BoiVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7405C214B5D2400B19617 /* BoiVCCell.swift */; };
+		FDF7405F214B5E4100B19617 /* BoiShopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7405E214B5E4100B19617 /* BoiShopTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F7198A22168BE3C0039B115 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		FDDD6324214800C700575F80 /* Bois Payment Solver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bois Payment Solver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDDD6327214800C700575F80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FDDD6329214800C700575F80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FDDD632C214800C700575F80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FDDD632F214800C700575F80 /* Bois_Payment_Solver.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bois_Payment_Solver.xcdatamodel; sourceTree = "<group>"; };
 		FDDD6331214800C900575F80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDDD6334214800C900575F80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FDDD6336214800C900575F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDF74037214947FA00B19617 /* OrdersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersTableViewController.swift; sourceTree = "<group>"; };
+		FDF7403B2149485100B19617 /* SelectBoisTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBoisTableViewController.swift; sourceTree = "<group>"; };
+		FDF7403D2149486E00B19617 /* BoisTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoisTableViewController.swift; sourceTree = "<group>"; };
+		FDF7403F2149487700B19617 /* CreateNewBoiTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewBoiTableViewController.swift; sourceTree = "<group>"; };
+		FDF74041214948C300B19617 /* BoiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiViewController.swift; sourceTree = "<group>"; };
+		FDF74043214948EE00B19617 /* OwedMoneyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwedMoneyTableViewController.swift; sourceTree = "<group>"; };
+		FDF7404521494B2800B19617 /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
+		FDF7404921494D5700B19617 /* NewShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShopViewController.swift; sourceTree = "<group>"; };
+		FDF7404B21496D2E00B19617 /* ManageOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageOrderViewController.swift; sourceTree = "<group>"; };
+		FDF74056214ABBF800B19617 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		FDF74058214AFC7700B19617 /* BoisTRCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoisTRCell.swift; sourceTree = "<group>"; };
+		FDF7405A214B00ED00B19617 /* NewProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductViewController.swift; sourceTree = "<group>"; };
+		FDF7405C214B5D2400B19617 /* BoiVCCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiVCCell.swift; sourceTree = "<group>"; };
+		FDF7405E214B5E4100B19617 /* BoiShopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoiShopTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,9 +65,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F7198A12168BE280039B115 /* CoreDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				6F7198A22168BE3C0039B115 /* CoreDataManager.swift */,
+			);
+			path = CoreDataManager;
+			sourceTree = "<group>";
+		};
+		6F7198A42168FB630039B115 /* Shop Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FDF7405A214B00ED00B19617 /* NewProductViewController.swift */,
+				FDF74037214947FA00B19617 /* OrdersTableViewController.swift */,
+			);
+			path = "Shop Controllers";
+			sourceTree = "<group>";
+		};
+		6F7198A521690ADB0039B115 /* Product Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FDF7404B21496D2E00B19617 /* ManageOrderViewController.swift */,
+				FDF7404921494D5700B19617 /* NewShopViewController.swift */,
+			);
+			path = "Product Controllers";
+			sourceTree = "<group>";
+		};
 		FDDD631B214800C700575F80 = {
 			isa = PBXGroup;
 			children = (
+				6F7198A12168BE280039B115 /* CoreDataManager */,
 				FDDD6326214800C700575F80 /* Bois Payment Solver */,
 				FDDD6325214800C700575F80 /* Products */,
 			);
@@ -56,15 +111,34 @@
 		FDDD6326214800C700575F80 /* Bois Payment Solver */ = {
 			isa = PBXGroup;
 			children = (
+				6F7198A521690ADB0039B115 /* Product Controllers */,
+				6F7198A42168FB630039B115 /* Shop Controllers */,
+				FDF74055214A812300B19617 /* Cells */,
 				FDDD6327214800C700575F80 /* AppDelegate.swift */,
-				FDDD6329214800C700575F80 /* ViewController.swift */,
 				FDDD632B214800C700575F80 /* Main.storyboard */,
 				FDDD6331214800C900575F80 /* Assets.xcassets */,
 				FDDD6333214800C900575F80 /* LaunchScreen.storyboard */,
 				FDDD6336214800C900575F80 /* Info.plist */,
 				FDDD632E214800C700575F80 /* Bois_Payment_Solver.xcdatamodeld */,
+				FDF7403B2149485100B19617 /* SelectBoisTableViewController.swift */,
+				FDF7403D2149486E00B19617 /* BoisTableViewController.swift */,
+				FDF7403F2149487700B19617 /* CreateNewBoiTableViewController.swift */,
+				FDF74041214948C300B19617 /* BoiViewController.swift */,
+				FDF74043214948EE00B19617 /* OwedMoneyTableViewController.swift */,
 			);
 			path = "Bois Payment Solver";
+			sourceTree = "<group>";
+		};
+		FDF74055214A812300B19617 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FDF7404521494B2800B19617 /* OrderCell.swift */,
+				FDF74056214ABBF800B19617 /* ProductCell.swift */,
+				FDF74058214AFC7700B19617 /* BoisTRCell.swift */,
+				FDF7405C214B5D2400B19617 /* BoiVCCell.swift */,
+				FDF7405E214B5E4100B19617 /* BoiShopTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +212,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDDD632A214800C700575F80 /* ViewController.swift in Sources */,
+				FDF74059214AFC7700B19617 /* BoisTRCell.swift in Sources */,
+				FDF7403C2149485100B19617 /* SelectBoisTableViewController.swift in Sources */,
+				FDF7403E2149486E00B19617 /* BoisTableViewController.swift in Sources */,
+				FDF7404621494B2800B19617 /* OrderCell.swift in Sources */,
+				6F7198A32168BE3C0039B115 /* CoreDataManager.swift in Sources */,
+				FDF74042214948C300B19617 /* BoiViewController.swift in Sources */,
+				FDF74057214ABBF800B19617 /* ProductCell.swift in Sources */,
+				FDF74038214947FA00B19617 /* OrdersTableViewController.swift in Sources */,
+				FDF7404A21494D5700B19617 /* NewShopViewController.swift in Sources */,
+				FDF7404C21496D2E00B19617 /* ManageOrderViewController.swift in Sources */,
+				FDF74044214948EE00B19617 /* OwedMoneyTableViewController.swift in Sources */,
 				FDDD6328214800C700575F80 /* AppDelegate.swift in Sources */,
+				FDF7405B214B00ED00B19617 /* NewProductViewController.swift in Sources */,
+				FDF7405F214B5E4100B19617 /* BoiShopTableViewCell.swift in Sources */,
 				FDDD6330214800C700575F80 /* Bois_Payment_Solver.xcdatamodeld in Sources */,
+				FDF7405D214B5D2400B19617 /* BoiVCCell.swift in Sources */,
+				FDF740402149487700B19617 /* CreateNewBoiTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
