@@ -12,7 +12,7 @@ import Foundation
 
 protocol NewProductDelegate
 {
-    func addNewProductToShop(product :NSManagedObject)
+    func addNewProductToShop(product :NSManagedObject, isEditingProduct: Bool)
 }
 
 class NewProductViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
@@ -20,7 +20,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     var delegate: NewProductDelegate?
     
     var product: NSManagedObject?
-
+    
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productNameField: UITextField!
     @IBOutlet weak var priceField: UITextField!
@@ -29,6 +29,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     
     var boisPrice: [String: Double] = [:]
     var boiNames:[String] = ["Vasil", "Niki", "Alex", "Iliq", "Toni", "Mitko", "Simo"]
+    private var isEditingProduct: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
         initBoisPrice()
         loadAllFieldsWithExistingInformation(product: self.product)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -52,11 +53,18 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = boisTableView.dequeueReusableCell(withIdentifier: "boisCell") as! BoisTRCell
         
-        //let boiName = self.boiNames[indexPath.row]
         let boiName = Array(self.boisPrice.keys)[indexPath.row]
         cell.boiName.text = boiName
+        
         if let boiMoney = self.boisPrice[boiName]{
             cell.boiMoney.text = String(boiMoney)
+            if(boiMoney != 0){
+                cell.accessoryType = .checkmark
+                // Selects the rows that are being used
+                self.boisTableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+            } else {
+                cell.accessoryType = .none
+            }
         }
         
         return cell
@@ -64,51 +72,56 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedCellsCount = boisTableView.indexPathsForSelectedRows?.count
+        guard let selectedCellsCount = boisTableView.indexPathsForSelectedRows?.count else {return}
         let selectedBoi = tableView.cellForRow(at: indexPath) as! BoisTRCell
         selectedBoi.accessoryType = .checkmark
         let boiName = selectedBoi.boiName.text
         
-        if let priceText = priceField.text{
-            if let price = Double(priceText){
-                let newPrice: Double = (price / Double(selectedCellsCount!)).rounded(toPlaces: 2)
-                self.boisPrice[boiName!] = newPrice
-                selectedBoi.boiMoney.text = String(newPrice)
-                
-                // for every selected cell, set it's price to the new price
-                for boiPath in boisTableView.indexPathsForSelectedRows! {
-                    let cell = tableView.cellForRow(at: boiPath) as! BoisTRCell
-                    self.boisPrice[cell.boiName.text!] = newPrice
-                    cell.boiMoney.text = String(newPrice)
-                }
-            }
-        }
+        setPriceForCellSelection(cell: selectedBoi, selectedCellsCount: selectedCellsCount, boiName: boiName!)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         let selectedBoi = tableView.cellForRow(at: indexPath) as! BoisTRCell
+        let boiName = selectedBoi.boiName.text
         selectedBoi.accessoryType = .none
-        let selectedCellsCount = boisTableView.indexPathsForSelectedRows?.count
-        
-        if let priceText = priceField.text{
-            if let price = Double(priceText){
-                let newPrice: Double = (price / Double(selectedCellsCount!)).rounded(toPlaces: 2)
-                
-                for boiPath in boisTableView.indexPathsForSelectedRows! {
-                    let cell = tableView.cellForRow(at: boiPath) as! BoisTRCell
-                    self.boisPrice[cell.boiName.text!] = newPrice
-                    cell.boiMoney.text = String(newPrice)
-                }
-                
-                self.boisPrice[selectedBoi.boiName.text!] = 0
-                selectedBoi.boiMoney.text = String(0)
-            }
-        }
-        
+        guard let selectedCellsCount = boisTableView.indexPathsForSelectedRows?.count else {return}
+        setPriceForCellDeSelection(cell: selectedBoi, selectedCellsCount: selectedCellsCount, boiName: boiName!)
         
     }
-  
+    
+    @IBAction func saveInContext(_ sender: Any) {
+        let (name, quantity, price) = self.checkFieldsProperties()
+        
+        // check if the object is being in edited or not
+        if(self.isEditingProduct){
+            if let prod = self.product as? ProductMO{
+                CoreDataManager.sharedManager.updateProduct(product: prod, name: name, price: price, quantity: quantity, boisPrice: boisPrice)
+                guard let del = delegate else { return }
+                del.addNewProductToShop(product: prod, isEditingProduct: self.isEditingProduct)
+            }
+        }
+        else {
+            // set properties
+            let newProduct = CoreDataManager.sharedManager.insertProduct(name: name, quantity: quantity, price: price, boisPrice: self.boisPrice)
+            self.productNameLabel.text = name
+            
+            // call the delegate, so we pass the product to the shop and update the tableview
+            guard let del = delegate, let product = newProduct else { return }
+            del.addNewProductToShop(product: product, isEditingProduct: self.isEditingProduct)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func dismiss(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Navigation
+    
+    // MARK: - Additional Methods
+    
     func initBoisPrice() {
         self.boisPrice["Vasil"] = 0
         self.boisPrice["Niki"] = 0
@@ -119,85 +132,14 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
         self.boisPrice["Simo"] = 0
     }
     
-    
-    @IBAction func saveInContext(_ sender: Any) {
-        // if it is alredy apperant then, fix the new stuff
-        // create the new entity and save it
-        
-//        if let currentProduct = self.product {
-//            let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
-//            let context = appDelegate.persistentContainer.viewContext
-//            let entity = NSEntityDescription.entity(forEntityName: "Product", in: context)
-//
-//
-//            let newProduct = NSManagedObject(entity: entity!, insertInto: context)
-//
-//        }
-
-            let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "Product", in: context)
-            let newProduct = NSManagedObject(entity: entity!, insertInto: context)
-            
-            // set properties
-            if let quantity = self.quantityField.text{
-                if(quantity != ""){
-                    newProduct.setValue(Decimal(string: quantity), forKey: "quantity")
-                }
-            }
-            if let name = self.productNameField.text {
-                if(name != ""){
-                    newProduct.setValue(name, forKey: "name")
-                    self.productNameLabel.text = name
-                }
-            }
-            if let priceTextField = self.priceField.text{
-                if let price = Decimal(string: priceTextField){
-                    if(priceTextField != ""){
-                      newProduct.setValue(price, forKey: "price")
-                    }
-                }
-            }
-            newProduct.setValue(self.boisPrice, forKey: "bois")
-            
-            // call the delegate, so we pass the product to the shop
-            if let dl = delegate{
-                dl.addNewProductToShop(product: newProduct)
-            }
-            
-            do{
-                try context.save()
-            } catch {
-                print("failed saving")
-            }
-            
-        
-        
-        dismiss(animated: true, completion: nil)
-        
+    func checkFieldsProperties() -> (String, String, Decimal){
+        guard let quantity = self.quantityField.text,
+            let name = self.productNameField.text,
+            let priceFieldText = self.priceField.text,
+            let price = Decimal(string: priceFieldText),
+            quantity != "", priceFieldText != "", name != "" else {return ("", "", 0)}
+        return (name, quantity, price)
     }
-    
-    @IBAction func dismiss(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    
-
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
-    // MARK: - Additional Methods
     
     func loadAllFieldsWithExistingInformation(product: NSManagedObject?){
         if let product = self.product{
@@ -218,12 +160,46 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func entityFoundation(object: NSManagedObject){
-        // set current object to the given object
+        // set current object to the given object (product)
         self.product = object
-        print(self.product?.value(forKey: "name"))
-        
+        self.isEditingProduct = true
     }
-
+ 
+    func setPriceForCellDeSelection(cell: BoisTRCell, selectedCellsCount: Int, boiName: String)  {
+        guard let priceText = priceField.text,
+            let price = Double(priceText), price > 0
+            else {return}
+        
+        let finalPrice = (price / Double(selectedCellsCount)).rounded(toPlaces: 2)
+        self.boisPrice[boiName] = finalPrice
+        cell.boiMoney.text = String(finalPrice)
+        
+        for boiPath in boisTableView.indexPathsForSelectedRows! {
+            let cell = self.boisTableView.cellForRow(at: boiPath) as! BoisTRCell
+            self.boisPrice[cell.boiName.text!] = finalPrice
+            cell.boiMoney.text = String(finalPrice)
+        }
+        
+        self.boisPrice[cell.boiName.text!] = 0
+        cell.boiMoney.text = String(0)
+    }
+    
+    func setPriceForCellSelection(cell: BoisTRCell, selectedCellsCount: Int, boiName: String)  {
+        guard let priceText = priceField.text,
+            let price = Double(priceText), price > 0
+            else {return}
+        
+        let finalPrice = (price / Double(selectedCellsCount)).rounded(toPlaces: 2)
+        self.boisPrice[boiName] = finalPrice
+        cell.boiMoney.text = String(finalPrice)
+        
+        // for every selected cell, set it's price to the new price
+        for boiPath in boisTableView.indexPathsForSelectedRows! {
+            let cell = self.boisTableView.cellForRow(at: boiPath) as! BoisTRCell
+            self.boisPrice[cell.boiName.text!] = finalPrice
+            cell.boiMoney.text = String(finalPrice)
+        }
+    }
 }
 
 

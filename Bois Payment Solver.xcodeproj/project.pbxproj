@@ -73,21 +73,23 @@
 			path = CoreDataManager;
 			sourceTree = "<group>";
 		};
-		6F7198A42168FB630039B115 /* Shop Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				FDF7405A214B00ED00B19617 /* NewProductViewController.swift */,
-				FDF74037214947FA00B19617 /* OrdersTableViewController.swift */,
-			);
-			path = "Shop Controllers";
-			sourceTree = "<group>";
-		};
-		6F7198A521690ADB0039B115 /* Product Controllers */ = {
+		6F7198A42168FB630039B115 /* Product Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				FDF7404B21496D2E00B19617 /* ManageOrderViewController.swift */,
+				FDF7405A214B00ED00B19617 /* NewProductViewController.swift */,
+			);
+			name = "Product Controllers";
+			path = "Shop Controllers";
+			sourceTree = "<group>";
+		};
+		6F7198A521690ADB0039B115 /* Shop Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FDF74037214947FA00B19617 /* OrdersTableViewController.swift */,
 				FDF7404921494D5700B19617 /* NewShopViewController.swift */,
 			);
+			name = "Shop Controllers";
 			path = "Product Controllers";
 			sourceTree = "<group>";
 		};
@@ -111,8 +113,8 @@
 		FDDD6326214800C700575F80 /* Bois Payment Solver */ = {
 			isa = PBXGroup;
 			children = (
-				6F7198A521690ADB0039B115 /* Product Controllers */,
-				6F7198A42168FB630039B115 /* Shop Controllers */,
+				6F7198A521690ADB0039B115 /* Shop Controllers */,
+				6F7198A42168FB630039B115 /* Product Controllers */,
 				FDF74055214A812300B19617 /* Cells */,
 				FDDD6327214800C700575F80 /* AppDelegate.swift */,
 				FDDD632B214800C700575F80 /* Main.storyboard */,

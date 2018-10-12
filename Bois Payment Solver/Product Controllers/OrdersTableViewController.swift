@@ -18,7 +18,9 @@ class OrdersTableViewController: UITableViewController,  NSFetchedResultsControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let shops = self.loadShopsFromDB(){ self.shopList = shops }
+        if let shops = self.loadShopsFromDB(){
+            self.shopList = shops
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -19,6 +19,11 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
     @IBOutlet weak var shopName: UILabel!
     @IBOutlet weak var shopSum: UILabel!
     
+    override func viewWillAppear(_ animated: Bool) {
+        let priceToDisplay = self.calculateTotalSumOfProducts()
+        self.shopSum.text = String(describing: priceToDisplay)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +33,7 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
         productTableView.delegate = self
         productTableView.dataSource = self
         
-        self.shopName.text = self.shop?.value(forKey: "name") as! String
+        self.shopName.text = self.shop?.value(forKey: "name") as? String
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,16 +67,6 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
             
             if let price = currentProduct.value(forKey: "price"){
                 cell.productPrice.text = String(describing: price)
-                
-                if let currentSum = Decimal(string: self.shopSum.text!){
-                    if let cellPrice = Decimal(string: cell.productPrice.text!){
-                        var value = currentSum + cellPrice
-                        self.shopSum.text = String(describing: value)
-                    }
-                }
-                
-                
-                
             }
         }
         
@@ -80,8 +75,6 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
     
     /*
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "addNewProduct"){
@@ -90,17 +83,11 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
                 if let destinationController =  segue.destination as? NewProductViewController{
                     destinationController.delegate = self
                     
-                    
                     if(indexPath.row != 0){
-                        // give the destinationController the information of the product
-                        // setProduct(product)
-                        self.shop?.mutableSetValue(forKey: "products").remove(products[indexPath.row-1])
+//                        print(self.shop?.mutableSetValue(forKey: "products").count)
+//                        // self.shop?.mutableSetValue(forKey: "products").remove(products[indexPath.row-1])
+//                        print(self.shop?.mutableSetValue(forKey: "products").count)
                         destinationController.entityFoundation(object: products[indexPath.row-1])
-                        
-                    }
-                        // get it as a new product
-                    else{
-                        
                     }
                     
                     self.present(destinationController, animated: true, completion: nil)
@@ -116,12 +103,28 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
     }
     
     // MARK: - Delegate
-    func addNewProductToShop(product: NSManagedObject) {
-        if let shop = self.shop as? Shop{
-            if let product = product as? ProductMO{
-                CoreDataManager.sharedManager.insertNewProductToShop(shop: shop, product: product)
-                self.products.append(product)
-                self.productTableView.reloadData()
+    func addNewProductToShop(product: NSManagedObject, isEditingProduct: Bool) {
+        
+        // Checks if no new product was created but if one is being edited and just makes the changes to the cell
+        if(isEditingProduct){
+            let selectedCellIndexPath = self.productTableView.indexPathForSelectedRow
+            if let indexPath = selectedCellIndexPath{
+                let selectedCell = self.productTableView.cellForRow(at: indexPath) as! ProductCell
+                guard let p = product as? ProductMO,
+                    let name = p.name, name != "",
+                let price = p.price else { return }
+                selectedCell.productName.text = name
+                selectedCell.productPrice.text = String(describing: price)
+            }
+            
+        }
+        else{
+            if let shop = self.shop as? Shop{
+                if let product = product as? ProductMO{
+                    CoreDataManager.sharedManager.insertNewProductToShop(shop: shop, product: product)
+                    self.products.append(product)
+                    self.productTableView.reloadData()
+                }
             }
         }
     }
@@ -129,7 +132,7 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
     // MARK: - Additional
     func setShopValue(value: Shop?){
         if let val = value{
-            self.shop = value;
+            self.shop = val
         }
     }
     
@@ -137,5 +140,16 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
         if let s = self.shop?.mutableSetValue(forKey: "products") {
             self.products = Array(s.allObjects) as! [ProductMO]
         }
+    }
+    
+    func calculateTotalSumOfProducts() -> Double {
+        var totalSum:Double = 0
+        self.products.forEach { (product: ProductMO) in
+            if let price = product.price{
+                totalSum += Double(price as NSNumber)
+            }
+        }
+        
+        return totalSum
     }
 }
