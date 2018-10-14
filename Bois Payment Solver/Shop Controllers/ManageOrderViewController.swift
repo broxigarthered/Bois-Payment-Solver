@@ -84,10 +84,8 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
                     destinationController.delegate = self
                     
                     if(indexPath.row != 0){
-//                        print(self.shop?.mutableSetValue(forKey: "products").count)
-//                        // self.shop?.mutableSetValue(forKey: "products").remove(products[indexPath.row-1])
-//                        print(self.shop?.mutableSetValue(forKey: "products").count)
-                        destinationController.entityFoundation(object: products[indexPath.row-1])
+                        guard let shopName = self.shop?.value(forKey: "name") as? String else {return}
+                        destinationController.entityFoundation(object: products[indexPath.row-1], shopName: shopName)
                     }
                     
                     self.present(destinationController, animated: true, completion: nil)

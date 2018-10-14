@@ -19,7 +19,7 @@ class CoreDataManager {
     //3
     lazy var persistentContainer: NSPersistentContainer = {
         
-         let container = NSPersistentContainer(name: "Bois_Payment_Solver")
+        let container = NSPersistentContainer(name: "Bois_Payment_Solver")
         
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -44,15 +44,15 @@ class CoreDataManager {
             }
         }
     }
-
+    
     //MARK: Shop managamenet funcitons
     func insertShop(shopName:String) -> Shop?{
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-    
+        
         let entity = NSEntityDescription.entity(forEntityName: "Shop",
                                                 in: managedContext)!
         let newShop = NSManagedObject(entity: entity,
-                                     insertInto: managedContext)
+                                      insertInto: managedContext)
         
         newShop.setValue(shopName, forKeyPath: "name")
         
@@ -134,69 +134,123 @@ class CoreDataManager {
     func insertBoi(boiName: String, productName: String, productPrice: Decimal, shopName: String) {
         
         let context = self.persistentContainer.viewContext
+        let (boiTupleBool, boiTupleObject) = boiExistsInContext(boiName: boiName)
+        let newProduct = Product(name: productName, price: productPrice, buyerName: shopName)
         
         // check if boi with this name alredy exists
-        if(!boiExistsInContext(boiName: boiName).0){
+        if(!boiTupleBool){
             // add him as new entity
             // insertAsNewEntityBoi
             let entity = NSEntityDescription.entity(forEntityName: "Boi", in: context)
             let boi = NSManagedObject(entity: entity!, insertInto: context) as? BoiMO
-            
+            boi?.name = boiName
             // create new instance of a class Product and add the product name and the price
-            let newProduct = Product(name: productName, price: productPrice, buyerName: shopName)
             
-            if let boiObject = boi{
-                guard let shopProductsDictionary = boiObject.value(forKey: "products") as? [String: Product] else { return }
-                
+            if(boi == nil){
+                return
             }
-        }
-        // else updateBoi()
-        
-        //TODO:
-        
-        
-        
-        // in one boi's transformable dictionary add the shop name as a key (if it doesn't exist) and the new product/class
-    
-    }
-    
-    private func boiExistsInContext(boiName: String) -> (Bool,BoiMO?){
-        if let fetchedBoi = self.getBoi(boiName: boiName){
-                return (true, fetchedBoi)
-        }
-        
-        return (false, nil)
-    }
-    
-    func loadAllBois() -> [BoiMO]? {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Boi")
-        request.returnsObjectsAsFaults = false
-        do {
-            guard let result = try self.persistentContainer.viewContext.fetch(request) as? [BoiMO] else { return nil }
-            return result
             
-        } catch {
-            print("Failed")
-        }
-        
-        return nil
-    }
-    
-    func getBoi(boiName: String) -> BoiMO? {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Boi")
-        request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "name = %s", boiName)
-        do {
-            guard let result = try self.persistentContainer.viewContext.fetch(request) as? BoiMO else { return nil }
-            return result
+            if(boi!.value(forKey: "products") == nil){
+                boi!.setValue([String: [Product]](), forKey: "products")
+            }
+            var shopProductsDictionary = boi!.value(forKey: "products") as! [String: [Product]]
             
-        } catch {
-            print("Failed")
+            if(shopProductsDictionary[shopName] == nil){
+                shopProductsDictionary[shopName] = [Product]()
+            }
+            
+            if(!(shopProductsDictionary[shopName]?.contains(newProduct))!){
+                shopProductsDictionary[shopName]?.append(newProduct)
+            }
+            
+            // TODO: insert the dictionary in the new boi and save the context
+            boi!.setValue(shopProductsDictionary, forKey: "products")
+            
+            for b in boi!.products as! [String: [Product]]{
+                print(b.key)
+                for p in b.value{
+                    print("--" + p.name)
+                }
+            }
+            
+            self.saveContext()
+        }
+        else{
+            guard let boi = boiTupleObject else {return}
+            var shopProductsDictionary = boi.value(forKey: "products") as! [String: [Product]]
+            
+            if(shopProductsDictionary[shopName] == nil){
+                shopProductsDictionary[shopName] = [Product]()
+            }
+            
+            if(!(shopProductsDictionary[shopName]?.contains(newProduct))!){
+                shopProductsDictionary[shopName]?.append(newProduct)
+            }
+            
+            // TODO: TEST ALL OF THAT CRAP!
+            boi.setValue(shopProductsDictionary, forKey: "products")
+            for b in boi.products as! [String: [Product]]{
+                print(b.key)
+                for p in b.value{
+                    print("--" + p.name)
+                }
+            }
+            self.saveContext()
         }
         
-        return nil
+        
+    
+    // else updateBoi()
+    
+    //TODO:
+    
+    
+    
+    // in one boi's transformable dictionary add the shop name as a key (if it doesn't exist) and the new product/class
+    
+}
+
+private func boiExistsInContext(boiName: String) -> (Bool,BoiMO?){
+    if let fetchedBoi = self.getBoi(boiName: boiName){
+        return (true, fetchedBoi)
     }
     
+    return (false, nil)
+}
+
+func loadAllBois() -> [BoiMO]? {
+    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Boi")
+    request.returnsObjectsAsFaults = false
+    do {
+        guard let result = try self.persistentContainer.viewContext.fetch(request) as? [BoiMO] else { return nil }
+        return result
+        
+    } catch {
+        print("Failed")
+    }
     
+    return nil
+}
+
+func getBoi(boiName: String) -> BoiMO? {
+    let request = NSFetchRequest<BoiMO>(entityName: "Boi")
+    request.returnsObjectsAsFaults = false
+    request.predicate = NSPredicate(format: "name == %@", boiName)
+    var results: [NSManagedObject] = []
+
+    do {
+        
+        results = try CoreDataManager.sharedManager.persistentContainer.viewContext.fetch(request) as [NSManagedObject]
+        if results.count > 0{
+            return results[0] as? BoiMO
+        }
+    } catch {
+        print("Failed")
+    }
     
+    return nil
+}
+
+
+
 }

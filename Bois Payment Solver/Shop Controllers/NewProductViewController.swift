@@ -20,6 +20,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     var delegate: NewProductDelegate?
     
     var product: NSManagedObject?
+    var shopName: String = ""
     
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productNameField: UITextField!
@@ -112,6 +113,10 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         //TODO: for every key-value in boisPrice, call CoreDataManager insertBoi (later on will create update method)
+        for b in boisPrice where b.value != 0 {
+            CoreDataManager.sharedManager.insertBoi(boiName: b.key, productName: name, productPrice: price, shopName: self.shopName)
+        }
+        
         
         dismiss(animated: true, completion: nil)
     }
@@ -161,10 +166,11 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func entityFoundation(object: NSManagedObject){
+    func entityFoundation(object: NSManagedObject, shopName: String){
         // set current object to the given object (product)
         self.product = object
         self.isEditingProduct = true
+        self.shopName = shopName
     }
  
     func setPriceForCellDeSelection(cell: BoisTRCell, selectedCellsCount: Int, boiName: String)  {
