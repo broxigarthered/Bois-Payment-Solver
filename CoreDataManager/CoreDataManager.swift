@@ -11,7 +11,7 @@ import CoreData
 import UIKit
 class CoreDataManager {
     
-    //1
+    
     static let sharedManager = CoreDataManager()
     //2.
     private init() {} // Prevent clients from creating another instance.
@@ -45,7 +45,7 @@ class CoreDataManager {
         }
     }
 
-    // Shop managamenet funcitons
+    //MARK: Shop managamenet funcitons
     func insertShop(shopName:String) -> Shop?{
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     
@@ -70,20 +70,6 @@ class CoreDataManager {
         request.returnsObjectsAsFaults = false
         do {
             guard let result = try self.persistentContainer.viewContext.fetch(request) as? [Shop] else { return nil }
-            return result
-            
-        } catch {
-            print("Failed")
-        }
-        
-        return nil
-    }
-    
-    func loadAllProducts() -> [ProductMO]? {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Product")
-        request.returnsObjectsAsFaults = false
-        do {
-            guard let result = try self.persistentContainer.viewContext.fetch(request) as? [ProductMO] else { return nil }
             return result
             
         } catch {
@@ -127,5 +113,90 @@ class CoreDataManager {
         product.setValue(boisPrice, forKey: "bois")
         self.saveContext()
     }
+    
+    func loadAllProducts() -> [ProductMO]? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Product")
+        request.returnsObjectsAsFaults = false
+        do {
+            guard let result = try self.persistentContainer.viewContext.fetch(request) as? [ProductMO] else { return nil }
+            return result
+            
+        } catch {
+            print("Failed")
+        }
+        
+        return nil
+    }
+    
+    
+    //MARK: Bois functions - insert/update/delete
+    //TODO finish this method
+    func insertBoi(boiName: String, productName: String, productPrice: Decimal, shopName: String) {
+        
+        let context = self.persistentContainer.viewContext
+        
+        // check if boi with this name alredy exists
+        if(!boiExistsInContext(boiName: boiName).0){
+            // add him as new entity
+            // insertAsNewEntityBoi
+            let entity = NSEntityDescription.entity(forEntityName: "Boi", in: context)
+            let boi = NSManagedObject(entity: entity!, insertInto: context) as? BoiMO
+            
+            // create new instance of a class Product and add the product name and the price
+            let newProduct = Product(name: productName, price: productPrice, buyerName: shopName)
+            
+            if let boiObject = boi{
+                guard let shopProductsDictionary = boiObject.value(forKey: "products") as? [String: Product] else { return }
+                
+            }
+        }
+        // else updateBoi()
+        
+        //TODO:
+        
+        
+        
+        // in one boi's transformable dictionary add the shop name as a key (if it doesn't exist) and the new product/class
+    
+    }
+    
+    private func boiExistsInContext(boiName: String) -> (Bool,BoiMO?){
+        if let fetchedBoi = self.getBoi(boiName: boiName){
+                return (true, fetchedBoi)
+        }
+        
+        return (false, nil)
+    }
+    
+    func loadAllBois() -> [BoiMO]? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Boi")
+        request.returnsObjectsAsFaults = false
+        do {
+            guard let result = try self.persistentContainer.viewContext.fetch(request) as? [BoiMO] else { return nil }
+            return result
+            
+        } catch {
+            print("Failed")
+        }
+        
+        return nil
+    }
+    
+    func getBoi(boiName: String) -> BoiMO? {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Boi")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "name = %s", boiName)
+        do {
+            guard let result = try self.persistentContainer.viewContext.fetch(request) as? BoiMO else { return nil }
+            return result
+            
+        } catch {
+            print("Failed")
+        }
+        
+        return nil
+    }
+    
+    
     
 }

@@ -111,6 +111,8 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
             del.addNewProductToShop(product: product, isEditingProduct: self.isEditingProduct)
         }
         
+        //TODO: for every key-value in boisPrice, call CoreDataManager insertBoi (later on will create update method)
+        
         dismiss(animated: true, completion: nil)
     }
     
