@@ -82,11 +82,14 @@ class ManageOrderViewController: UIViewController, NSFetchedResultsControllerDel
                 
                 if let destinationController =  segue.destination as? NewProductViewController{
                     destinationController.delegate = self
+                    guard let shopName = self.shop?.value(forKey: "name") as? String else {return}
                     
                     if(indexPath.row != 0){
-                        guard let shopName = self.shop?.value(forKey: "name") as? String else {return}
+                        
                         destinationController.entityFoundation(object: products[indexPath.row-1], shopName: shopName)
                     }
+                    
+                    destinationController.shopName = shopName
                     
                     self.present(destinationController, animated: true, completion: nil)
                 }

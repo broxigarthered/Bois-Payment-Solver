@@ -163,7 +163,6 @@ class CoreDataManager {
                 shopProductsDictionary[shopName]?.append(newProduct)
             }
             
-            // TODO: insert the dictionary in the new boi and save the context
             boi!.setValue(shopProductsDictionary, forKey: "products")
             
             for b in boi!.products as! [String: [Product]]{
@@ -176,7 +175,7 @@ class CoreDataManager {
             self.saveContext()
         }
         else{
-            guard let boi = boiTupleObject else {return}
+             guard let boi = boiTupleObject else {return}
             var shopProductsDictionary = boi.value(forKey: "products") as! [String: [Product]]
             
             if(shopProductsDictionary[shopName] == nil){
@@ -198,9 +197,7 @@ class CoreDataManager {
             self.saveContext()
         }
         
-        
-    
-    // else updateBoi()
+
     
     //TODO:
     
@@ -250,7 +247,6 @@ func getBoi(boiName: String) -> BoiMO? {
     var results: [NSManagedObject] = []
 
     do {
-        
         results = try CoreDataManager.sharedManager.persistentContainer.viewContext.fetch(request) as [NSManagedObject]
         if results.count > 0{
             return results[0] as? BoiMO
