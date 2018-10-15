@@ -32,7 +32,7 @@ class OrdersTableViewController: UITableViewController,  NSFetchedResultsControl
             cell.selectionStyle = .none
             
         } else {
-            cell.orderName.text = self.shopList[indexPath.row-1].value(forKey: "name") as! String
+            cell.orderName.text = self.shopList[indexPath.row-1].value(forKey: "name") as? String
         }
         
         return cell

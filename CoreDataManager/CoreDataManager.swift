@@ -209,6 +209,17 @@ class CoreDataManager {
     // in one boi's transformable dictionary add the shop name as a key (if it doesn't exist) and the new product/class
     
 }
+    
+    /*
+    TODO:
+     1. Should create bois service layer to hand all of the methods for BoiMO
+     2. Should create a method for removing a product in one's boy shop, upon deselecting a cell in the NewProductVC
+        2.1 Check if the boi exists
+            2.1.1 If the boi exists, get his value for products
+            2.1.2 Check if the product exists, if it does, remove it
+            2.1.3 Save context
+     */
+    
 
 private func boiExistsInContext(boiName: String) -> (Bool,BoiMO?){
     if let fetchedBoi = self.getBoi(boiName: boiName){

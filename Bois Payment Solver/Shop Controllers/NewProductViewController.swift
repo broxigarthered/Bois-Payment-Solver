@@ -82,7 +82,9 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
+        /* TODO:
+            Upon deselection, the product should be removed from the boi's products list and get updated
+         */
         let selectedBoi = tableView.cellForRow(at: indexPath) as! BoisTRCell
         let boiName = selectedBoi.boiName.text
         selectedBoi.accessoryType = .none

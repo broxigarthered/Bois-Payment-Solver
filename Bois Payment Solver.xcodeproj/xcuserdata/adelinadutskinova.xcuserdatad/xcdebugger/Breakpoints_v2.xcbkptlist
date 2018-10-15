@@ -367,8 +367,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
             endingLineNumber = "150"
-            landmarkName = "loadAllFieldsWithExistingInformation(product:)"
-            landmarkType = "7">
+            landmarkName = "NewProductViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -383,8 +383,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "153"
             endingLineNumber = "153"
-            landmarkName = "NewProductViewController"
-            landmarkType = "3">
+            landmarkName = "loadAllFieldsWithExistingInformation(product:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -399,7 +399,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "132"
             endingLineNumber = "132"
-            landmarkName = "checkFieldsProperties()"
+            landmarkName = "initBoisPrice()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -415,7 +415,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "133"
             endingLineNumber = "133"
-            landmarkName = "checkFieldsProperties()"
+            landmarkName = "initBoisPrice()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -527,8 +527,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
             endingLineNumber = "130"
-            landmarkName = "checkFieldsProperties()"
-            landmarkType = "7">
+            landmarkName = "NewProductViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -543,8 +543,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
             endingLineNumber = "140"
-            landmarkName = "ManageOrderViewController"
-            landmarkType = "3">
+            landmarkName = "loadAllProducts()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -575,7 +575,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "98"
             endingLineNumber = "98"
-            landmarkName = "insertNewProductToShop(shop:product:)"
+            landmarkName = "insertProduct(name:quantity:price:boisPrice:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

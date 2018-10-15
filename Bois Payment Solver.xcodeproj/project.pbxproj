@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6F42656921723F54008E5F73 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F42656821723F54008E5F73 /* Product.swift */; };
 		6F7198A32168BE3C0039B115 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7198A22168BE3C0039B115 /* CoreDataManager.swift */; };
+		FD69F9582174B7D000F33DDE /* BoisServiceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD69F9572174B7D000F33DDE /* BoisServiceLayer.swift */; };
 		FDDD6328214800C700575F80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDD6327214800C700575F80 /* AppDelegate.swift */; };
 		FDDD632D214800C700575F80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDDD632B214800C700575F80 /* Main.storyboard */; };
 		FDDD6330214800C700575F80 /* Bois_Payment_Solver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDDD632E214800C700575F80 /* Bois_Payment_Solver.xcdatamodeld */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		6F42656821723F54008E5F73 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		6F7198A22168BE3C0039B115 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		FD69F9572174B7D000F33DDE /* BoisServiceLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoisServiceLayer.swift; sourceTree = "<group>"; };
 		FDDD6324214800C700575F80 /* Bois Payment Solver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bois Payment Solver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDDD6327214800C700575F80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDDD632C214800C700575F80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 		6F7198A12168BE280039B115 /* CoreDataManager */ = {
 			isa = PBXGroup;
 			children = (
+				FD69F9562174B7B900F33DDE /* Bois Service Layer */,
 				6F7198A22168BE3C0039B115 /* CoreDataManager.swift */,
 			);
 			path = CoreDataManager;
@@ -101,6 +104,14 @@
 			);
 			name = "Shop Controllers";
 			path = "Product Controllers";
+			sourceTree = "<group>";
+		};
+		FD69F9562174B7B900F33DDE /* Bois Service Layer */ = {
+			isa = PBXGroup;
+			children = (
+				FD69F9572174B7D000F33DDE /* BoisServiceLayer.swift */,
+			);
+			path = "Bois Service Layer";
 			sourceTree = "<group>";
 		};
 		FDDD631B214800C700575F80 = {
@@ -242,6 +253,7 @@
 				FDF7405F214B5E4100B19617 /* BoiShopTableViewCell.swift in Sources */,
 				FDDD6330214800C700575F80 /* Bois_Payment_Solver.xcdatamodeld in Sources */,
 				FDF7405D214B5D2400B19617 /* BoiVCCell.swift in Sources */,
+				FD69F9582174B7D000F33DDE /* BoisServiceLayer.swift in Sources */,
 				FDF740402149487700B19617 /* CreateNewBoiTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
