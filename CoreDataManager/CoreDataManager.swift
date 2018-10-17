@@ -130,82 +130,96 @@ class CoreDataManager {
     
     
     //MARK: Bois functions - insert/update/delete
-    //TODO finish this method
-    func insertBoi(boiName: String, productName: String, productPrice: Decimal, shopName: String) {
-        
-        let context = self.persistentContainer.viewContext
-        let (boiTupleBool, boiTupleObject) = boiExistsInContext(boiName: boiName)
+    // MARK: General method for boi insertion and also inserting products in boi's shop's products list (as dictionary).
+    // Creates new boi if it doesn't exists and manages the dictionary
+    func updateBoiModel(boiName: String, productName: String, productPrice: Decimal, shopName: String) {
+        let (boiExists, boiObject) = boiExistsInContext(boiName: boiName)
         let newProduct = Product(name: productName, price: productPrice, buyerName: shopName)
         
-        // check if boi with this name alredy exists
-        if(!boiTupleBool){
-            // add him as new entity
-            // insertAsNewEntityBoi
-            let entity = NSEntityDescription.entity(forEntityName: "Boi", in: context)
-            let boi = NSManagedObject(entity: entity!, insertInto: context) as? BoiMO
-            boi?.name = boiName
-            // create new instance of a class Product and add the product name and the price
+        if(!boiExists){
+            let boi = saveNewBoiInContext(entityName: "Boi")
+            boi.name = boiName
             
-            if(boi == nil){
-                return
+            if(boi.value(forKey: "products") == nil){
+                boi.setValue([String: [Product]](), forKey: "products")
             }
             
-            if(boi!.value(forKey: "products") == nil){
-                boi!.setValue([String: [Product]](), forKey: "products")
-            }
-            var shopProductsDictionary = boi!.value(forKey: "products") as! [String: [Product]]
-            
-            if(shopProductsDictionary[shopName] == nil){
-                shopProductsDictionary[shopName] = [Product]()
-            }
-            
-            if(!(shopProductsDictionary[shopName]?.contains(newProduct))!){
-                shopProductsDictionary[shopName]?.append(newProduct)
-            }
-            
-            boi!.setValue(shopProductsDictionary, forKey: "products")
-            
-            for b in boi!.products as! [String: [Product]]{
-                print(b.key)
-                for p in b.value{
-                    print("--" + p.name)
-                }
-            }
-            
-            self.saveContext()
+            insertNewProductInBoi(boi: boi, newProduct: newProduct, shopName: shopName)
+            printBoisShopsAndProducts(boi: boi)
         }
-        else{
-             guard let boi = boiTupleObject else {return}
-            var shopProductsDictionary = boi.value(forKey: "products") as! [String: [Product]]
+        else{ // update boi
+            guard let boi = boiObject else {return}
             
-            if(shopProductsDictionary[shopName] == nil){
-                shopProductsDictionary[shopName] = [Product]()
-            }
-            
-            if(!(shopProductsDictionary[shopName]?.contains(newProduct))!){
-                shopProductsDictionary[shopName]?.append(newProduct)
-            }
-            
-            // TODO: TEST ALL OF THAT CRAP!
-            boi.setValue(shopProductsDictionary, forKey: "products")
-            for b in boi.products as! [String: [Product]]{
-                print(b.key)
-                for p in b.value{
-                    print("--" + p.name)
-                }
-            }
-            self.saveContext()
+            insertNewProductInBoi(boi: boi, newProduct: newProduct, shopName: shopName)
+            printBoisShopsAndProducts(boi: boi)
         }
         
-
+        self.saveContext()
+    }
     
-    //TODO:
+    // Temporal method for printing and testing
+    func printBoisShopsAndProducts(boi: BoiMO) {
+        print(boi.name)
+        for b in boi.products as! [String: [Product]]{
+            print("- \(b.key)")
+            for p in b.value{
+                print("-- " + p.name + " \(p.price)")
+            }
+        }
+    }
     
+    private func saveNewBoiInContext(entityName: String) -> BoiMO {
+        let context = self.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: entityName, in: context)
+        let boi = NSManagedObject(entity: entity!, insertInto: context) as! BoiMO
+        return boi
+    }
     
+    private func insertNewProductInBoi(boi: BoiMO, newProduct: Product, shopName:String) {
+        var shopProductsDictionary = boi.value(forKey: "products") as! [String: [Product]]
+        
+        if(shopProductsDictionary[shopName] == nil){
+            shopProductsDictionary[shopName] = [Product]()
+        }
+        
+        
+        if(!(shopProductsDictionary[shopName]?.contains(newProduct))!){
+            shopProductsDictionary[shopName]?.append(newProduct)
+        }
+        
+        boi.setValue(shopProductsDictionary, forKey: "products")
+    }
     
-    // in one boi's transformable dictionary add the shop name as a key (if it doesn't exist) and the new product/class
+    //TODO: check if those two methods below work and call them from deselectAtIndexPathgma
+    func removeProductFromBoi(productName: String, shopName: String, boiName: String) -> String {
+        if let boi = self.getBoi(boiName: boiName){
+            if let newProductsList = self.removeProductFromBoiDictionary(productName: productName, shopName: shopName, boi: boi) {
+                boi.setValue(newProductsList, forKey: "products")
+                return productName
+            }
+        }
+        
+        return "Nothing inserted"
+    }
     
-}
+    private func removeProductFromBoiDictionary(productName: String, shopName: String, boi: BoiMO) -> [String: [Product]]?{
+        var shopProductsDictionary = boi.products as! [String: [Product]]
+        if shopProductsDictionary[shopName] != nil {
+            if(shopProductsDictionary[shopName]?.contains(where: { (p: Product) -> Bool in
+                return p.name == productName
+            }))! {
+                // filter returns the array after it's been filtered
+                if let products = shopProductsDictionary[shopName]?.filter({ (p:Product) -> Bool in
+                    return p.name != productName
+                }) {
+                    shopProductsDictionary[shopName] = products
+    
+                }
+            }
+        }
+        
+        return nil
+    }
     
     /*
     TODO:

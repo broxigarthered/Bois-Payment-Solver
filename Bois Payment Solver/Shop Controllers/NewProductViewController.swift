@@ -116,7 +116,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
         
         //TODO: for every key-value in boisPrice, call CoreDataManager insertBoi (later on will create update method)
         for b in boisPrice where b.value != 0 {
-            CoreDataManager.sharedManager.insertBoi(boiName: b.key, productName: name, productPrice: price, shopName: self.shopName)
+            CoreDataManager.sharedManager.updateBoiModel(boiName: b.key, productName: name, productPrice: price, shopName: self.shopName)
         }
         
         
