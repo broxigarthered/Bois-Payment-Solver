@@ -10,9 +10,8 @@ import UIKit
 
 class BoiVCCell: UITableViewCell {
 
-    @IBOutlet weak var name: UILabel!
-    
-    @IBOutlet weak var totalMoney: UILabel!
+  @IBOutlet weak var nameLabel: UILabel!
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

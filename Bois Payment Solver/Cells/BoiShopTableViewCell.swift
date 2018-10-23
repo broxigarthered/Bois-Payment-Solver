@@ -10,7 +10,9 @@ import UIKit
 
 class BoiShopTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
+  @IBOutlet weak var shopNameLabel: UILabel!
+  @IBOutlet weak var priceLabel: UILabel!
+  override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
