@@ -40,6 +40,7 @@ class BoiViewController: UIViewController, NSFetchedResultsControllerDelegate, U
   // MARK: Tableview Data source methods
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
+    
     //TODO: This isn't working
     let cell = shopProductsTableView.dequeueReusableCell(withIdentifier: "BoiShopTableViewCell") as! BoiShopTableViewCell
     
