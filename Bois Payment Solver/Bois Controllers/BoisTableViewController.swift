@@ -12,12 +12,7 @@ import CoreData
 
 class BoisTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
   
-  var boisPrice: [String: Decimal] = [:]
-  var boiNames:[String] = ["Vasil", "Niki", "Alex", "Iliq", "Toni", "Mitko", "Simo"]
   var bois: [BoiMO] = []
-  
-  var shopList : [NSManagedObject] = []
-  var products: [NSManagedObject] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,7 +24,6 @@ class BoisTableViewController: UITableViewController, NSFetchedResultsController
     } else {
       print("There are no bois in the db.")
     }
-    
   }
   
   override func didReceiveMemoryWarning() {
@@ -38,6 +32,15 @@ class BoisTableViewController: UITableViewController, NSFetchedResultsController
   }
   
   // MARK: - Table view data source
+  
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "BoiVCCell", for: indexPath) as! BoiVCCell
+    
+    cell.nameLabel.text = bois[indexPath.row].name
+    
+    return cell
+  }
+  
   override func numberOfSections(in tableView: UITableView) -> Int {
     
     return 1
@@ -48,29 +51,11 @@ class BoisTableViewController: UITableViewController, NSFetchedResultsController
     return bois.count
   }
   
-  
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "BoiVCCell", for: indexPath) as! BoiVCCell
-    
-    cell.nameLabel.text = bois[indexPath.row].name
-    
-    
-    
-    //TODO: get money from db for certain boi
-    // works but don't really need it, because of the whole fetching deal
-//    if let money = bois[indexPath.row].totapPriceOwed {
-//      cell.moneyLabel.text = String(describing: money)
-//    }
-    
-    return cell
-  }
-  
   func initBois() -> [BoiMO]?{
     return CoreDataManager.sharedManager.loadAllBois()
   }
   
   // MARK: - Navigation
-  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "showBoiInfo" {
       if let destinationController =  segue.destination as? BoiViewController{

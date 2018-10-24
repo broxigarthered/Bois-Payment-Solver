@@ -21,6 +21,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
   
   var product: NSManagedObject?
   var shopName: String = ""
+  var shopPayer: String = ""
   
   @IBOutlet weak var productNameLabel: UILabel!
   @IBOutlet weak var productNameField: UITextField!
@@ -96,6 +97,8 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     if let boi = boiName, let product = productName {
       let removedProduct = CoreDataManager.sharedManager.removeProductFromBoi(productName: product, shopName: shopName, boiName: boi)
       print(removedProduct)
+      
+      // TODO: change the price of the other left bois entities
     }
   }
   
@@ -113,7 +116,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     }
     else {
       // set properties
-      let newProduct = CoreDataManager.sharedManager.insertProduct(name: name, quantity: quantity, price: price, boisPrice: self.boisPrice)
+      let newProduct = CoreDataManager.sharedManager.insertProduct(name: name, quantity: quantity, price: price, boisPrice: self.boisPrice, shopPayer: self.shopPayer)
       self.productNameLabel.text = name
       
       // call the delegate, so we pass the product to the shop and update the tableview
@@ -123,7 +126,7 @@ class NewProductViewController: UIViewController, UITableViewDataSource, UITable
     
     //TODO: for every key-value in boisPrice, call CoreDataManager insertBoi (later on will create update method)
     for b in boisPrice where b.value != 0 {
-      CoreDataManager.sharedManager.updateBoiModel(boiName: b.key, productName: name, productPrice: Decimal(b.value), shopName: self.shopName)
+      CoreDataManager.sharedManager.updateBoiModel(boiName: b.key, productName: name, productPrice: Decimal(b.value), shopName: self.shopName, shopBuyer: self.shopPayer)
     }
     
     

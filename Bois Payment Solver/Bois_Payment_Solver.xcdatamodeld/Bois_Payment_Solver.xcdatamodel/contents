@@ -9,19 +9,20 @@
         <attribute name="bois" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="grams" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="payer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="shop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shop" inverseName="products" inverseEntity="Shop" syncable="YES"/>
     </entity>
     <entity name="Shop" representedClassName="Shop" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="payers" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="payers" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sum" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="shop" inverseEntity="Product" syncable="YES"/>
     </entity>
     <elements>
         <element name="Boi" positionX="-54" positionY="27" width="128" height="90"/>
-        <element name="Product" positionX="-63" positionY="-18" width="128" height="30"/>
+        <element name="Product" positionX="-63" positionY="-18" width="128" height="150"/>
         <element name="Shop" positionX="-36" positionY="45" width="128" height="105"/>
     </elements>
 </model>

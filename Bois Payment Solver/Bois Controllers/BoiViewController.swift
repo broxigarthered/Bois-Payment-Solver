@@ -27,17 +27,12 @@ class BoiViewController: UIViewController, NSFetchedResultsControllerDelegate, U
     shopProductsTableView.dataSource = self
     
     if let b = boi {
-        initBoisProperties(boi: b)
+      initBoisProperties(boi: b)
     }
-    
-    //var orders =  getOrders()
-    
-    // Do any additional setup after loading the view.
   }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
   
   // MARK: Tableview Data source methods
@@ -45,28 +40,21 @@ class BoiViewController: UIViewController, NSFetchedResultsControllerDelegate, U
     
     let cell = shopProductsTableView.dequeueReusableCell(withIdentifier: "BoiShopTableViewCell") as! BoiShopTableViewCell
     
-    // set the cell name
-    //cell.shopNameLabel.text = self.shopNameForIndex(boi: boi!, index: indexPath.section)
-    
-    
-    
     let shopName = shopNameForIndex(boi: boi!, index: indexPath.section)
     if let product = self.productNameForIndex(boi: boi!, shopName: shopName, index: indexPath.row){
-        cell.shopNameLabel.text = product.name
-        cell.priceLabel.text = String(describing: product.price)
-        totalSum += product.price
-        totalSumLabel.text = String(describing: totalSum)
+      
+      // get the product buyer
+      print(product.buyer)
+      cell.shopNameLabel.text = product.name
+      cell.priceLabel.text = String(describing: product.price)
+      totalSum += product.price
+      totalSumLabel.text = String(describing: totalSum)
     }
-    
-    
-    
-    // set the cell price
     
     return cell
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // TODO: fix that shiet
     let dictionary = boi?.products as! [String: [Product]]
     let arrayOfProducts = Array(dictionary)[section].value
     return arrayOfProducts.count

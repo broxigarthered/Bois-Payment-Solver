@@ -44,7 +44,6 @@ class Product: NSObject, NSCoding{
   // Have to override the NSObject's isEqual, so it gets recognized by .contains
   override func isEqual(_ object: Any?) -> Bool {
     guard let otherObject = object as? Product else { return false }
-    print(self.name == otherObject.name)
     return self.name == otherObject.name
   }
   
