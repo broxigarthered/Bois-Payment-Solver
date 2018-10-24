@@ -54,6 +54,8 @@ class BoisTableViewController: UITableViewController, NSFetchedResultsController
     
     cell.nameLabel.text = bois[indexPath.row].name
     
+    
+    
     //TODO: get money from db for certain boi
     // works but don't really need it, because of the whole fetching deal
 //    if let money = bois[indexPath.row].totapPriceOwed {
@@ -77,13 +79,9 @@ class BoisTableViewController: UITableViewController, NSFetchedResultsController
           let boiToTransfer = bois[safeIndexPath.row]
           destinationController.setBoi(boi: boiToTransfer)
         }
-        
-//        destinationController.products = self.products
-//        let cell = self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!) as! BoiVCCell
-//        destinationController.boiName = cell.nameLabel.text!
-        
       }
     }
-    
   }
+  
+  
 }

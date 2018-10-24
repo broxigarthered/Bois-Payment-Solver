@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoreDataManager/CoreDataManager.swift"
-            timestampString = "562000672.902678"
+            timestampString = "562067098.0632859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoreDataManager/CoreDataManager.swift"
-            timestampString = "562000672.90291"
+            timestampString = "562067098.063835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "217"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoreDataManager/CoreDataManager.swift"
-            timestampString = "562000672.903374"
+            timestampString = "562067098.06397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoreDataManager/CoreDataManager.swift"
-            timestampString = "562000672.90347"
+            timestampString = "562067098.064038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoreDataManager/CoreDataManager.swift"
-            timestampString = "562000672.903636"
+            timestampString = "562067098.064127"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
@@ -218,7 +218,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoreDataManager/CoreDataManager.swift"
-            timestampString = "562000672.904078"
+            timestampString = "562067098.064213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "194"
@@ -234,12 +234,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoreDataManager/CoreDataManager.swift"
-            timestampString = "562000672.904152"
+            timestampString = "562067098.064265"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "179"
             endingLineNumber = "179"
             landmarkName = "insertNewProductInBoi(boi:newProduct:shopName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Bois Payment Solver/Bois Controllers/BoiViewController.swift"
+            timestampString = "562067098.064317"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "shopNameForIndex(boi:index:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

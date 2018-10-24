@@ -16,6 +16,9 @@ class BoiViewController: UIViewController, NSFetchedResultsControllerDelegate, U
   
   @IBOutlet weak var shopProductsTableView: UITableView!
   @IBOutlet weak var boiNameLabel: UILabel!
+  @IBOutlet weak var totalSumLabel: UILabel!
+  
+  private var totalSum: Decimal = 0.0
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -40,12 +43,22 @@ class BoiViewController: UIViewController, NSFetchedResultsControllerDelegate, U
   // MARK: Tableview Data source methods
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-    
-    //TODO: This isn't working
     let cell = shopProductsTableView.dequeueReusableCell(withIdentifier: "BoiShopTableViewCell") as! BoiShopTableViewCell
     
     // set the cell name
-    cell.shopNameLabel.text = self.shopNameForIndex(boi: boi!, index: indexPath.row)
+    //cell.shopNameLabel.text = self.shopNameForIndex(boi: boi!, index: indexPath.section)
+    
+    
+    
+    let shopName = shopNameForIndex(boi: boi!, index: indexPath.section)
+    if let product = self.productNameForIndex(boi: boi!, shopName: shopName, index: indexPath.row){
+        cell.shopNameLabel.text = product.name
+        cell.priceLabel.text = String(describing: product.price)
+        totalSum += product.price
+        totalSumLabel.text = String(describing: totalSum)
+    }
+    
+    
     
     // set the cell price
     
@@ -59,30 +72,20 @@ class BoiViewController: UIViewController, NSFetchedResultsControllerDelegate, U
     return arrayOfProducts.count
   }
   
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return shopNameForIndex(boi: boi!, index: section)
+  }
+  
   func numberOfSections(in tableView: UITableView) -> Int {
     return (boi?.products as! [String: [Product]]).count
   }
-
   
   
+  // MARK: Actions
   
-  
-//  func getOrders() -> [String: Decimal] {
-//
-//    var result: [String: Decimal] = [:]
-//
-//    for item in products {
-//      let bois = item.value(forKey: "bois") as! [String: Decimal]
-//      for boi in bois {
-//        if(boi.key == self.boiName){
-//          result[boi.key] = boi.value
-//        }
-//      }
-//    }
-//
-//    return result
-//  }
-  
+  @IBAction func dismissView(_ sender: Any) {
+    dismiss(animated: true, completion: nil)
+  }
   
   // MARK: Custom methods
   
@@ -94,6 +97,14 @@ class BoiViewController: UIViewController, NSFetchedResultsControllerDelegate, U
   
   func setBoi(boi: BoiMO)  {
     self.boi = boi
+  }
+  
+  private func productNameForIndex(boi: BoiMO, shopName: String, index: Int) -> Product?{
+    if let dictionary = boi.products as? [String: [Product]]{
+      return dictionary[shopName]![index]
+    }
+    
+    return nil
   }
   
   private func initBoisProperties(boi: BoiMO){
