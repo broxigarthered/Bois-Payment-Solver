@@ -19,36 +19,21 @@ class BoisTableViewController: UITableViewController, NSFetchedResultsController
     
     //TODO: call the bois fetching, only when changes are made to the db, using observer pattern
   
-    if let loadedBois = initBois() {
-        self.bois = loadedBois
-    } else {
-      print("There are no bois in the db.")
-    }
+    
   }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let loadedBois = initBois() {
+            self.bois = loadedBois
+            self.tableView.reloadData()
+        } else {
+            print("There are no bois in the db.")
+        }
+    }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
-  }
-  
-  // MARK: - Table view data source
-  
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "BoiVCCell", for: indexPath) as! BoiVCCell
-    
-    cell.nameLabel.text = bois[indexPath.row].name
-    
-    return cell
-  }
-  
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    
-    return 1
-  }
-  
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete implementation, return the number of rows
-    return bois.count
   }
   
   func initBois() -> [BoiMO]?{
@@ -67,6 +52,27 @@ class BoisTableViewController: UITableViewController, NSFetchedResultsController
       }
     }
   }
-  
-  
+}
+
+extension BoisTableViewController {
+    // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BoiVCCell", for: indexPath) as! BoiVCCell
+        
+        cell.nameLabel.text = bois[indexPath.row].name
+        
+        return cell
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return bois.count
+    }
+
 }
